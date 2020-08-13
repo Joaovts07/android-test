@@ -10,7 +10,8 @@ import com.example.android_test_einstein.R
 import com.example.android_test_einstein.models.Categorys
 import kotlinx.android.synthetic.main.example_item.view.*
 
-class CategoryAdapter(private val exampleList: List<Categorys>) :
+class CategoryAdapter(private val exampleList: List<Categorys>,
+                      private val listener: OnItemClickListener) :
     RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
@@ -30,8 +31,21 @@ class CategoryAdapter(private val exampleList: List<Categorys>) :
 
     override fun getItemCount() = exampleList.size
 
-    class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         val imageView: ImageView = itemView.image_view
         val textView1: TextView = itemView.text_view_1
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
+    }
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }

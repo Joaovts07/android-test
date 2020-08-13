@@ -1,8 +1,5 @@
 package com.example.android_test_einstein.models
 
-import com.google.gson.annotations.SerializedName
+data class Jokes(val id : Int ) {
 
-class Jokes {
-    @SerializedName("id")
-    var id: String? = null
 }
